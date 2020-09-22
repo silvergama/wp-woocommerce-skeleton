@@ -15,9 +15,12 @@ install:
 	$(MAKE) plugin/delete
 	$(MAKE) theme/delete
 	$(MAKE) plugin/install
-	$(MAKE) plugin/translate
 	$(MAKE) plugin/activate
 	$(MAKE) wp-db/update
+
+
+translate:
+	$(MAKE) plugin/translate
 	$(MAKE) core/translate
 
 core/install:
