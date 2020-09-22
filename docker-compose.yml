@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - db:/var/lib/mysql
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  wp:
+    depends_on:
+      - db
+    restart: always
+    build: .
+    image: silvergama/wordpress-xdebug:latest
+    container_name: wordpress
+    env_file: .env
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      WORDPRESS_DEBUG: ${WORDPRESS_DEBUG}
+    ports:
+      - "8080:80"
+    volumes:
+      - "./app:/var/www/html"
+      - "./logs/xdebug.log:/tmp/xdebug.log"
+
+volumes:
+  db:
