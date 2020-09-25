@@ -13,6 +13,7 @@ docker/down:
 
 install:
 	@(MAKE core/install)
+	@(MAKE theme/install)
 	@(MAKE plugin/delete)
 	@(MAKE theme/delete)
 	@(MAKE plugin/install)
@@ -46,10 +47,10 @@ plugin/update:
 	docker exec wordpress wp plugin update --all
 
 theme/delete:
-	docker exec wordpress wp theme delete twentynineteen twentyseventeen
+	docker exec wordpress wp theme delete twentyseventeen twentynineteen twentytwenty 
 
 theme/install:
-	docker exec wordpress wp theme install storefront
+	docker exec wordpress wp theme install storefront --activate
 
 wp-db/update:
 	docker exec wordpress wp core update-db
