@@ -5,23 +5,24 @@ include .env
 start: docker/up install
 
 docker/up:
-	docker-compose up -d
+	@(docker-compose up -d)
+	@(docker-compose run wait)
 
 docker/down:
-	docker-compose down
+	@(docker-compose down)
 
 install:
-	$(MAKE) core/install
-	$(MAKE) plugin/delete
-	$(MAKE) theme/delete
-	$(MAKE) plugin/install
-	$(MAKE) plugin/activate
-	$(MAKE) wp-db/update
+	@(MAKE core/install)
+	@(MAKE plugin/delete)
+	@(MAKE theme/delete)
+	@(MAKE plugin/install)
+	@(MAKE plugin/activate)
+	@(MAKE wp-db/update)
 
 
 translate:
-	$(MAKE) plugin/translate
-	$(MAKE) core/translate
+	@(MAKE plugin/translate)
+	@(MAKE core/translate)
 
 core/install:
 	docker exec wordpress wp core install --url=${WP_URL} --title=${WP_TITLE} --admin_user=${WP_USER} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL}
@@ -46,6 +47,9 @@ plugin/update:
 
 theme/delete:
 	docker exec wordpress wp theme delete twentynineteen twentyseventeen
+
+theme/install:
+	docker exec wordpress wp theme install storefront
 
 wp-db/update:
 	docker exec wordpress wp core update-db
