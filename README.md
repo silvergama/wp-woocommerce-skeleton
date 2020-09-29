@@ -3,6 +3,12 @@
 ## Overview
 A basic Wordpress/Woocommerce skeleton store
 
+**OBS**
+XDebug configured for MacOS
+```
+xdebug.remote_host=docker.for.mac.localhost
+```
+Change _xdebug.remote_host=your_host_ in Dockerfile if your OS is different
 
 ### Instalation
 
