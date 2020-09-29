@@ -92,11 +92,13 @@ $RECYCLE.BIN/
 .env
 
 ### log ###
-/logs
+logs/*
+!logs/xdebug.log
 
 ### WordPress ###
 # ignore everything in the root except the "wp-content" directory.
 app/*
+!app/.gitkeep
 !app/wp-content/
 app/wp-content/*
 !app/wp-content/themes/
